@@ -1,10 +1,9 @@
 import './App.css';
-import React from "react";
-import{ Grid, Card, List } from "@mui/material";
-import { green } from "@mui/material/colors";
+import Contact from "./components/Contact";
 import Header from "./components/Header";
-import Contact from './components/Contact';
-import ContactForm from './components/ContactForm';
+import ContactForm from "./components/ContactForm";
+import Grid from "@mui/material/Grid";
+import React, { useState } from "react";
 // Uncomment untuk memuat daftar kontak
 import contactsJSON from "./data/contacts.json";
 // import contactsJSON from './data/contacts.json';
@@ -15,25 +14,24 @@ const App = () => {
 
   // Masukkan contacts yang sudah didapat dalam JSON sebagai initial state
   // Buatlah handler untuk menambahkan kontak baru yang akan dikirim ke ContactForm
-  const [contacts, setContact] = React.useState(contactsJSON);
+  const [contacts, setContacts] = useState(contactJSON);
 
-  const handleClick = (newContact) => {
-    setContact([...contacts, newContact]);
+  const handleSubmit = (event) => {
+    console.log("event ", event);
+    setContacts([...contacts, event]);
   };
 
   return (
     <div className="App">
-      <Grid container spacing={12} style={{ padding: 20 }}>
-        <Header/>
-        <ContactForm handleClick={handleClick} />
-        <Grid item xs={5}>
-            <Card style={{ padding:10, backgroundColor: green[100] }}>
-                <List>
-                  {contacts.map((data, index) => {
-                    return <Contact data={data} key={index}/>
-                  })}
-                </List>
-            </Card>
+       <Header />
+      <Grid container spacing={1}>
+        <Grid item xs={7}>
+          <ContactForm handleClick={handleSubmit} />
+        </Grid>
+        <Grid item xs={5} sx={{ marginTop: 8 }}>
+          {contacts.map((contact, index) => (
+            <Contact key={index} data={contact} />
+          ))}
         </Grid>
       </Grid>
     </div>
