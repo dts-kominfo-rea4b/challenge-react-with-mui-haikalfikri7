@@ -2,89 +2,75 @@
 // https://mui.com/material-ui/react-text-field/#basic-textfield
 // dan Card
 // https://mui.com/material-ui/react-card/#basic-card
-import React, {useState} from "react";
-import {Grid, Card, TextField, Button} from "@mui/material";
-import { yellow } from "@mui/material/colors";
+import { Button, FormControl, TextField } from "@mui/material";
 
-const ContactForm = () => {
+const ContactForm = ({addContact}) => {
     // Form berisi name, phone, email, dan photo url
     // Buatlah state newContact berupa objek sesuai dengan data yang ada
-    const [newContact, setNewContact] = useState({
-        name:"",
-        phone:"",
-        email: "",
-        photo:"",
-    });
+
+    const handleSubmit = () => {
+        const name = document.querySelector("#name");
+        const phone = document.querySelector("#phone");
+        const email = document.querySelector("#email");
+        const photo = document.querySelector("#photo");
+        const formData = {
+          name: name.value,
+          phone: phone.value,
+          email: email.value,
+          photo: photo.value,
+        };
+        name.value = "";
+        phone.value = "";
+        email.value = "";
+        photo.value = "";
+    
+        console.log(formData);
+    
+        addContact(formData);
+      };
+
+
+      
 
     return (
-        <> <Grid item xs={5}>
-        <Card style={{ padding: 10, backgroundColor: yellow[50] }}>
-          <TextField
-            fullWidth
-            required
-            id="name"
-            label="Name"
-            margin="dense"
-            variant="filled"
-            onChange={(e) => {
-              setNewContact({ ...newContact, name: e.target.value });
-            }}
-          />
-          <TextField
-            fullWidth
-            required
-            id="phone"
-            label="Phone"
-            margin="dense"
-            variant="filled"
-            onChange={(e) => {
-              setNewContact({ ...newContact, phone: e.target.value });
-            }}
-          />
-          <TextField
-            fullWidth
-            required
-            id="email"
-            label="Email"
-            margin="dense"
-            variant="filled"
-            onChange={(e) => {
-              setNewContact({ ...newContact, email: e.target.value });
-            }}
-          />
-          <TextField
-            fullWidth
-            required
-            id="photo"
-            label="Photo"
-            margin="dense"
-            variant="filled"
-            onChange={(e) => {
-              setNewContact({ ...newContact, photo: e.target.value });
-            }}
-          />
-          <Button
-            onClick={() => {
-              handleClick(newContact);
+        <FormControl>
+      <TextField
+        label="Name"
+        name="name"
+        id="name"
+        type="text"
+        sx={{ m: 1, width: "25ch" }}
+        variant="standard"
+      />
+      <TextField
+        label="Phone"
+        name="phone"
+        type="text"
+        id="phone"
+        sx={{ m: 1, width: "25ch" }}
+        variant="standard"
+      />
+      <TextField
+        label="Email"
+        name="email"
+        id="email"
+        type="email"
+        sx={{ m: 1, width: "25ch" }}
+        variant="standard"
+      />
+      <TextField
+        label="Photo"
+        name="photo"
+        type="text"
+        id="photo"
+        sx={{ m: 1, width: "25ch" }}
+        variant="standard"
+      />
 
-              document.getElementById("name").value = "";
-              document.getElementById("phone").value = "";
-              document.getElementById("email").value = "";
-              document.getElementById("photo").value = "";
-
-              setNewContact({
-                name: "",
-                phone: "",
-                email: "",
-                photo: "",
-              });
-            }}
-          >
-            ADD NEW
-          </Button>
-        </Card>
-      </Grid> 
-      </>
+      <Button variant="contained" onClick={handleSubmit}>
+        Add New
+      </Button>
+    </FormControl>
     );
 }
 
